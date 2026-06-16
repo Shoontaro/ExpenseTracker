@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 using ConsoleTables;
 
 namespace ExpenseTracker
@@ -12,6 +13,25 @@ namespace ExpenseTracker
     {
 
         private static readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(), "expenses.json");
+
+        public static void DeleteExpense(int id) {
+
+            List<Expense> expenses = LoadExpenses();
+
+            Expense expense = expenses.Find(x => x.Id == id);
+
+            if (expense == null)
+            {
+                Console.WriteLine("Wrong id");
+                return;
+            }
+
+            expenses.Remove(expense);
+
+            SaveExpenses(expenses);
+
+            Console.WriteLine("Expense deleted successfully");
+        }
 
         public static void AddExpense(Expense expense)
         {

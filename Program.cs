@@ -35,6 +35,12 @@ class Program
             Command listCommand = new("list", "View all expenses");
             listCommand.SetAction(parseResulr => FileRepository.ListExpenses());
 
+            Command delCommand = new("delete",  "Delete an expense")
+            {
+                idArgiment
+            };
+            delCommand.SetAction(parseResult => FileRepository.DeleteExpense(parseResult.GetValue(idArgiment)));
+
             Command updateCpmmand = new("update", "Update an expense with a description and amount")
             {
                 idArgiment,
@@ -57,7 +63,8 @@ class Program
                 addCommand,
                 updateCpmmand,
                 exitCommand,
-                listCommand
+                listCommand,
+                delCommand
             };
 
             rootCommand.Parse(command).Invoke();
