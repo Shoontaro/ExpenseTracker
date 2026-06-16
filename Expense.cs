@@ -13,6 +13,7 @@ namespace ExpenseTracker
         public int Amount { get; set; } //возможно лучше double
         public DateTime CreateAt { get; set; }
 
+        public Expense() { }
         public Expense(string description, int amount)
         {
             Description = description;

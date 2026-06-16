@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using ConsoleTables;
 
 namespace ExpenseTracker
 {
@@ -21,6 +22,43 @@ namespace ExpenseTracker
             SaveExpenses(expenses);
 
             Console.WriteLine($"Expense added successfully (ID: {expense.Id})");
+        }
+
+        public static void ListExpenses() {
+
+            List<Expense> espenses = LoadExpenses();
+
+            if (espenses.Count == 0) {
+                Console.WriteLine("Нет данных!");
+                return;
+            }
+
+            var table = new ConsoleTable("ID", "Date", "Description", "Amount");
+
+            foreach (Expense exp in LoadExpenses())
+            {
+                table.AddRow(exp.Id, exp.CreateAt.ToShortDateString(), exp.Description, exp.Amount);
+            }
+            table.Write();
+        }
+
+        public static void UpdateExpense(int id, Expense expense) 
+        {
+            List<Expense> expenses = LoadExpenses();
+            Expense exp =expenses.Find(v => v.Id == id);
+
+            if (exp == null)
+            {
+                Console.WriteLine("Wrong id");
+                return;
+            }
+
+            if (!string.IsNullOrEmpty(expense.Description)) { exp.Description = expense.Description; }
+            if (expense.Amount>0) { exp.Amount = expense.Amount; }
+
+            SaveExpenses(expenses);
+
+            Console.WriteLine($"Expense was update (ID: {id})");
         }
 
         private static List<Expense> LoadExpenses()

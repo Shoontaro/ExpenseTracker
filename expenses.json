@@ -1,8 +1,8 @@
 [
   {
     "Id": 1,
-    "Description": "test",
-    "Amount": 10,
+    "Description": "new test",
+    "Amount": 40,
     "CreateAt": "2026-06-16T17:10:26.0344197+03:00"
   }
 ]
