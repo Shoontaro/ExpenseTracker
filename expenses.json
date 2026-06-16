@@ -4,5 +4,17 @@
     "Description": "new test",
     "Amount": 40,
     "CreateAt": "2026-06-16T17:10:26.0344197+03:00"
+  },
+  {
+    "Id": 2,
+    "Description": "bread",
+    "Amount": 5,
+    "CreateAt": "2026-06-16T23:32:03.0743473+03:00"
+  },
+  {
+    "Id": 3,
+    "Description": "milk",
+    "Amount": 7,
+    "CreateAt": "2026-06-16T23:32:14.9897964+03:00"
   }
 ]

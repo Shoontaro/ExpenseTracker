@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 using ConsoleTables;
+using System.Globalization;
 
 namespace ExpenseTracker
 {
@@ -13,6 +14,23 @@ namespace ExpenseTracker
     {
 
         private static readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(), "expenses.json");
+
+        public static void Summary(int mnth) {
+            if (mnth > 0 && mnth < 13)
+            {
+                string[] monthNames = CultureInfo.InvariantCulture.DateTimeFormat.MonthNames;
+
+                Console.WriteLine($"Total expenses {monthNames[mnth - 1]}: {LoadExpenses().Where(v=>v.CreateAt.Month == mnth).Sum(v => v.Amount)}");
+            }
+            else if (mnth == 0) {
+                Console.WriteLine($"Total expenses: {LoadExpenses().Sum(v=>v.Amount)}"); 
+            }
+            else
+            {
+                Console.WriteLine("Wrong month");
+                return;
+            }
+        }
 
         public static void DeleteExpense(int id) {
 

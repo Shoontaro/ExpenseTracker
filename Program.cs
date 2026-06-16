@@ -27,6 +27,10 @@ class Program
                 Description = "Amount"
             };
 
+            Option<int> mnthOption = new(name: "--month", aliases: "-m") {
+                Description = "Month"
+            };
+
             Argument<int> idArgiment = new("id") { Description = "Expense id" };
 
             Command exitCommand = new("exit", "Close the project");
@@ -34,6 +38,11 @@ class Program
 
             Command listCommand = new("list", "View all expenses");
             listCommand.SetAction(parseResulr => FileRepository.ListExpenses());
+
+            Command sumCommand = new("summary") {
+            mnthOption
+            };
+            sumCommand.SetAction(parseResult => FileRepository.Summary(parseResult.GetValue(mnthOption)));
 
             Command delCommand = new("delete",  "Delete an expense")
             {
@@ -64,7 +73,8 @@ class Program
                 updateCpmmand,
                 exitCommand,
                 listCommand,
-                delCommand
+                delCommand, 
+                sumCommand
             };
 
             rootCommand.Parse(command).Invoke();
