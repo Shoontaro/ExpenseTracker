@@ -3,18 +3,28 @@
     "Id": 1,
     "Description": "new test",
     "Amount": 40,
-    "CreateAt": "2026-06-16T17:10:26.0344197+03:00"
+    "CreateAt": "2026-06-16T17:10:26.0344197+03:00",
+    "Category": null
   },
   {
     "Id": 2,
     "Description": "bread",
     "Amount": 5,
-    "CreateAt": "2026-06-16T23:32:03.0743473+03:00"
+    "CreateAt": "2026-06-16T23:32:03.0743473+03:00",
+    "Category": null
   },
   {
     "Id": 3,
     "Description": "milk",
     "Amount": 7,
-    "CreateAt": "2026-06-16T23:32:14.9897964+03:00"
+    "CreateAt": "2026-06-16T23:32:14.9897964+03:00",
+    "Category": null
+  },
+  {
+    "Id": 4,
+    "Description": "fish",
+    "Amount": 9,
+    "CreateAt": "2026-06-16T23:44:43.2916949+03:00",
+    "Category": "food"
   }
 ]

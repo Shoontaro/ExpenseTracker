@@ -19,7 +19,11 @@ class Program
 
             Option<string> descOption = new(name: "--description", aliases: "-d")
             {
-                Description = "description"
+                Description = "Description"
+            };
+            Option<string> categoryOption = new(name: "--category", aliases: "-c")
+            {
+                Description = "Category"
             };
 
             Option<int> amountOption = new(name: "--amount", aliases: "-a")
@@ -36,8 +40,13 @@ class Program
             Command exitCommand = new("exit", "Close the project");
             exitCommand.SetAction(parseResult => Environment.Exit(0));
 
-            Command listCommand = new("list", "View all expenses");
-            listCommand.SetAction(parseResulr => FileRepository.ListExpenses());
+            Command listCommand = new("list", "View all expenses") { 
+            categoryOption
+            };
+            listCommand.SetAction(parseResult => {
+                if (String.IsNullOrEmpty(parseResult.GetValue(categoryOption))) { FileRepository.ListExpenses(); }
+                else { FileRepository.ListExpenses(parseResult.GetValue(categoryOption)??""); }
+            });
 
             Command sumCommand = new("summary") {
             mnthOption
@@ -55,16 +64,18 @@ class Program
                 idArgiment,
                 descOption,
                 amountOption,
+                categoryOption
             };
-            updateCpmmand.SetAction(parseResult => FileRepository.UpdateExpense(parseResult.GetValue(idArgiment), new Expense(parseResult.GetValue(descOption) ?? "", parseResult.GetValue(amountOption))));
+            updateCpmmand.SetAction(parseResult => FileRepository.UpdateExpense(parseResult.GetValue(idArgiment), new Expense(parseResult.GetValue(descOption) ?? "", parseResult.GetValue(amountOption), parseResult.GetValue(categoryOption) ?? "")));
 
-            Command addCommand = new("add", "Add an expense with a description and amount") //подкоманда
+            Command addCommand = new("add", "Add an expense with a description and amount")
             {
                descOption,
                amountOption,
+               categoryOption
             };
             addCommand.Aliases.Add("create");
-            addCommand.SetAction(parseResult => FileRepository.AddExpense(new Expense(parseResult.GetValue(descOption)??"", parseResult.GetValue(amountOption))));
+            addCommand.SetAction(parseResult => FileRepository.AddExpense(new Expense(parseResult.GetValue(descOption)??"", parseResult.GetValue(amountOption), parseResult.GetValue(categoryOption) ?? "")));
 
 
             RootCommand rootCommand = new("Simple expense tracker application to manage your finances")

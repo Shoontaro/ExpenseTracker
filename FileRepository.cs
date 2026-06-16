@@ -62,6 +62,23 @@ namespace ExpenseTracker
             Console.WriteLine($"Expense added successfully (ID: {expense.Id})");
         }
 
+        public static void ListExpenses(string category) {
+
+            List<Expense> espenses = LoadExpenses().Where(v=>v.Category == category).ToList();
+
+            if (espenses.Count == 0) {
+                Console.WriteLine("Нет данных!");
+                return;
+            }
+
+            var table = new ConsoleTable("ID", "Date", "Description", "Amount", "Category");
+
+            foreach (Expense exp in espenses)
+            {
+                table.AddRow(exp.Id, exp.CreateAt.ToShortDateString(), exp.Description, exp.Amount, exp.Category);
+            }
+            table.Write();
+        }
         public static void ListExpenses() {
 
             List<Expense> espenses = LoadExpenses();
@@ -71,11 +88,11 @@ namespace ExpenseTracker
                 return;
             }
 
-            var table = new ConsoleTable("ID", "Date", "Description", "Amount");
+            var table = new ConsoleTable("ID", "Date", "Description", "Amount", "Category");
 
-            foreach (Expense exp in LoadExpenses())
+            foreach (Expense exp in espenses)
             {
-                table.AddRow(exp.Id, exp.CreateAt.ToShortDateString(), exp.Description, exp.Amount);
+                table.AddRow(exp.Id, exp.CreateAt.ToShortDateString(), exp.Description, exp.Amount, exp.Category);
             }
             table.Write();
         }
