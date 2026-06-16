@@ -37,6 +37,9 @@ class Program
 
             Argument<int> idArgiment = new("id") { Description = "Expense id" };
 
+            Command csvCommand = new("export", "Export expenses to CSV file");
+            csvCommand.SetAction(parseResult => FileRepository.ExportToCSV());
+
             Command exitCommand = new("exit", "Close the project");
             exitCommand.SetAction(parseResult => Environment.Exit(0));
 
@@ -85,7 +88,8 @@ class Program
                 exitCommand,
                 listCommand,
                 delCommand, 
-                sumCommand
+                sumCommand,
+              //  csvCommand
             };
 
             rootCommand.Parse(command).Invoke();

@@ -14,6 +14,7 @@ namespace ExpenseTracker
     {
 
         private static readonly string FilePath = Path.Combine(Directory.GetCurrentDirectory(), "expenses.json");
+        private static readonly string FilePathCSV = Path.Combine(Directory.GetCurrentDirectory(), "expenses.csv");
 
         public static void Summary(int mnth) {
             if (mnth > 0 && mnth < 13)
@@ -128,6 +129,22 @@ namespace ExpenseTracker
         {
             var json = JsonSerializer.Serialize(todos, new JsonSerializerOptions { WriteIndented = true });
             File.WriteAllText(FilePath, json);
+        }
+
+        public static void ExportToCSV()
+        {
+            List<Expense> expenses = LoadExpenses();
+            var csvBuilder = new StringBuilder();
+
+            csvBuilder.AppendLine("Id,Description,Amount,CreateAt,Category");
+
+            foreach (Expense expense in expenses) {
+                csvBuilder.AppendLine($"{expense.Id},{expense.Description},{expense.Amount},{expense.CreateAt},{expense.Category}");
+            }
+
+            File.WriteAllText(FilePathCSV, csvBuilder.ToString(), Encoding.UTF8);
+
+            Console.WriteLine("Success export expenses to a CSV file");
         }
     }
 }
